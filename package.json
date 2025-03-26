@@ -1,0 +1,30 @@
+{
+    "name": "furrealease-backend",
+    "version": "1.0.0",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "dev": "node -r dotenv/config.js --watch index.js",
+        "start": "node index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/TheRealAniko/furrealease-backend.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/TheRealAniko/furrealease-backend/issues"
+    },
+    "homepage": "https://github.com/TheRealAniko/furrealease-backend#readme",
+    "description": "",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.7",
+        "express": "^4.21.2",
+        "mongoose": "^8.13.0",
+        "morgan": "^1.10.0",
+        "multer": "^1.4.5-lts.2"
+    }
+}
