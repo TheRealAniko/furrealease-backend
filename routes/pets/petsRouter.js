@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-    gettAllPets,
+    getAllPets,
     createPet,
     getSinglePet,
     updatePet,
@@ -18,7 +18,7 @@ petsRouter.use("/:petId/vet-visits", vetVisitsRouter);
 petsRouter.use("/:petId/weights", weightRouter);
 petsRouter.use("/:petId/notes", notesRouter);
 
-petsRouter.route("/").get(gettAllPets).post(createPet);
+petsRouter.route("/").get(getAllPets).post(createPet);
 
 petsRouter.route("/:petId").get(getSinglePet).patch(updatePet);
 

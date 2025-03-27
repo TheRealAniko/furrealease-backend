@@ -3,7 +3,7 @@ import Pet from "../../motels/Pet.js";
 import asyncHandler from "../../utils/asyncHandler.js";
 import errorResponse from "../../utils/errorResponse.js";
 
-export const gettAllPets = asyncHandler(async (req, res, next) => {
+export const getAllPets = asyncHandler(async (req, res, next) => {
     const pets = await Pet.find().populate("petOwner");
     res.json(pets);
 });
