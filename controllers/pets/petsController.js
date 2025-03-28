@@ -4,12 +4,14 @@ import asyncHandler from "../../utils/asyncHandler.js";
 import errorResponse from "../../utils/errorResponse.js";
 
 export const getAllPets = asyncHandler(async (req, res, next) => {
-    const pets = await Pet.find().populate("petOwner");
+    const pets = await Pet.find({ petOwner: req.userId }).populate("petOwner");
     res.json(pets);
 });
 
+// createPet
 export const createPet = asyncHandler(async (req, res, next) => {
-    const { body, userId } = req;
+    const { userId } = req;
+    const body = req.body;
     const newPet = await (
         await Pet.create({ ...body, petOwner: userId })
     ).populate("petOwner");
@@ -20,7 +22,10 @@ export const createPet = asyncHandler(async (req, res, next) => {
 export const getSinglePet = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
     if (!isValidObjectId(id)) throw new errorResponse("Invalid id", 400);
-    const pet = await Pet.findById(id).populate("petOwner");
+    // const pet = await Pet.findById(id).populate("petOwner");
+    const pet = await Pet.findOne({ _id: id, petOwner: req.userId }).populate(
+        "petOwner"
+    );
     if (!pet)
         throw new errorResponse(`Pet with id of ${id} doesn't exist`, 400);
     res.send(pet);
@@ -31,9 +36,11 @@ export const updatePet = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
     const { body } = req;
     if (!isValidObjectId(id)) throw new errorResponse("Invalid id", 400);
-    const updatePet = await Pet.findByIdAndUpdate(id, body, {
-        new: true,
-    }).populate("petOwner");
+    const updatePet = await Pet.findOneAndUpdate(
+        { _id: id, petOwner: req.userId },
+        body,
+        { new: true }
+    ).populate("petOwner");
     if (!updatePet)
         throw new errorResponse(`Pet with id of ${id} doesn't exist`, 400);
     res.json(updatePet);
@@ -43,8 +50,8 @@ export const updatePet = asyncHandler(async (req, res, next) => {
 export const retirePet = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
     if (!isValidObjectId(id)) throw new errorResponse("Invalid id", 400);
-    const pet = await Pet.findByIdAndUpdate(
-        id,
+    const pet = await Pet.findOneAndUpdate(
+        { _id: id, petOwner: req.userId },
         { retired: true },
         { new: true }
     );

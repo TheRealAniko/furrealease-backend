@@ -6,10 +6,7 @@ import errorResponse from "../utils/errorResponse.js";
 
 // me
 export const me = asyncHandler(async (req, res, next) => {
-    const {
-        user: { id },
-    } = req;
-    const user = await User.findById(id).select("-password");
+    const user = await User.findById(req.userId).select("-password");
     res.status(200).json(user);
 });
 
