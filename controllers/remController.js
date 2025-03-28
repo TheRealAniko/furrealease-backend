@@ -5,7 +5,9 @@ import Reminder from "../motels/Reminder.js";
 
 // getAllRem
 export const getAllRems = asyncHandler(async (req, res, next) => {
-    const rems = await Reminder.find();
+    const rems = await Reminder.find({ petOwner: req.userId }).populate(
+        "petOwner"
+    );
     res.json(rems);
 });
 
@@ -13,7 +15,10 @@ export const getAllRems = asyncHandler(async (req, res, next) => {
 export const getSingleRem = asyncHandler(async (req, res, next) => {
     const { remId } = req.params;
     if (!isValidObjectId(remId)) throw new errorResponse("Invalid ID", 400);
-    const rem = await Reminder.findById(remId);
+    const rem = await Reminder.findOne({
+        _id: remId,
+        petOwner: req.userId,
+    }).populate("petOwner");
     if (!rem)
         throw new errorResponse(
             `Reminder with id of ${remId} doesn't exist`,
@@ -25,7 +30,7 @@ export const getSingleRem = asyncHandler(async (req, res, next) => {
 // createRem
 export const createRem = asyncHandler(async (req, res, next) => {
     const { body } = req;
-    const newRem = await Reminder.create({ ...body });
+    const newRem = await Reminder.create({ ...body, petOwner: req.userId });
     res.status(201).json(newRem);
 });
 
@@ -34,9 +39,11 @@ export const updateRem = asyncHandler(async (req, res, next) => {
     const { remId } = req.params;
     const { body } = req;
     if (!isValidObjectId(remId)) throw new errorResponse("Invalid ID", 400);
-    const updateRem = await Reminder.findByIdAndUpdate(remId, body, {
-        new: true,
-    });
+    const updateRem = await Reminder.findOneAndUpdate(
+        { _id: remId, petOwner: req.userId },
+        body,
+        { new: true }
+    ).populate("petOwner");
     if (!updateRem)
         throw new errorResponse(
             `Reminder with id of ${remId} doesn't exist`,
@@ -49,7 +56,10 @@ export const updateRem = asyncHandler(async (req, res, next) => {
 export const deleteRem = asyncHandler(async (req, res, next) => {
     const { remId } = req.params;
     if (!isValidObjectId(remId)) throw new errorResponse("Invalid ID", 400);
-    const deleteRem = await Reminder.findByIdAndDelete(remId);
+    const deleteRem = await Reminder.findOneAndDelete({
+        _id: remId,
+        petOwner: req.userId,
+    });
     if (!deleteRem)
         throw new errorResponse(
             `Reminder with id of ${remId} doesn't exist`,

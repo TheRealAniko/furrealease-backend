@@ -7,7 +7,7 @@ const authenticate = asyncHandler((req, res, next) => {
     if (!token) throw new errorResponse("Forbidden", 403);
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = payload;
+    req.userId = payload.id;
 
     next();
 });
