@@ -24,7 +24,11 @@ export const signIn = asyncHandler(async (req, res, next) => {
         expiresIn: "12h",
     });
 
-    res.status(200).json(token);
+    res.status(200).json({
+        token, // ← der JWT
+        user, // ← z. B. { id, email, firstName }
+        success: "Welcome back!",
+    });
 });
 
 // signOut

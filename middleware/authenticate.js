@@ -11,7 +11,12 @@ const authenticate = asyncHandler((req, res, next) => {
 
     if (!token) throw new errorResponse("Forbidden", 403);
 
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    let payload;
+    try {
+        payload = jwt.verify(token, process.env.JWT_SECRET);
+    } catch (err) {
+        throw new errorResponse("Invalid or expired token", 401);
+    }
     req.userId = payload.id;
 
     next();
