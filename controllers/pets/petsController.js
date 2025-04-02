@@ -4,6 +4,7 @@ import asyncHandler from "../../utils/asyncHandler.js";
 import errorResponse from "../../utils/errorResponse.js";
 
 export const getAllPets = asyncHandler(async (req, res, next) => {
+    console.log("🐾 Current user ID:", req.userId);
     const pets = await Pet.find({ petOwner: req.userId }).populate("petOwner");
     res.json(pets);
 });

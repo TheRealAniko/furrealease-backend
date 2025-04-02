@@ -20,7 +20,7 @@ petsRouter.use("/:petId/notes", notesRouter);
 
 petsRouter.route("/").get(getAllPets).post(createPet);
 
-petsRouter.route("/:petId").get(getSinglePet).patch(updatePet);
+petsRouter.route("/:id").get(getSinglePet).patch(updatePet);
 
 petsRouter.route("/:petId/cloud").patch(retirePet);
 

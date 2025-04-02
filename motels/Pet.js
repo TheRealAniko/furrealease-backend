@@ -12,6 +12,10 @@ const petSchema = new Schema(
         photoUrl: { type: String },
         birthdate: { type: Date },
         species: { type: String, required: [true, "Species is required."] },
+        breed: { type: String },
+        sex: { type: String, enum: ["male", "female", "unknown"] },
+        color: { type: String },
+        intact: { type: Boolean, default: true }, // true = nicht kastriert
         chipped: { type: Boolean, default: false },
         chipNumber: {
             type: String,
