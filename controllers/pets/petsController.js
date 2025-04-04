@@ -13,9 +13,17 @@ export const getAllPets = asyncHandler(async (req, res, next) => {
 export const createPet = asyncHandler(async (req, res, next) => {
     const { userId } = req;
     const body = req.body;
+
+    // 👉 optionales Foto (kommt von Multer + Cloudinary)
+    if (req.file) {
+        body.photoUrl = req.file.path; // 🌤 Cloudinary liefert URL über `.path`
+    }
+
+    // Pet speichern inkl. userId + evtl. photoUrl
     const newPet = await (
         await Pet.create({ ...body, petOwner: userId })
     ).populate("petOwner");
+
     res.status(201).json(newPet);
 });
 

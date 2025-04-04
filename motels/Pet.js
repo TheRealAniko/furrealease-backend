@@ -15,8 +15,16 @@ const petSchema = new Schema(
         breed: { type: String },
         sex: { type: String, enum: ["male", "female", "unknown"] },
         color: { type: String },
-        intact: { type: Boolean, default: true }, // true = nicht kastriert
-        chipped: { type: Boolean, default: false },
+        intact: {
+            type: String,
+            enum: ["intact", "neutered", "unknown"],
+            default: "unknown",
+        }, // true = nicht kastriert
+        chipped: {
+            type: String,
+            enum: ["yes", "no", "unknown"],
+            default: "unknown",
+        },
         chipNumber: {
             type: String,
             validate: {
