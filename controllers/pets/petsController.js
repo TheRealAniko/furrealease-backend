@@ -45,6 +45,11 @@ export const updatePet = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
     const { body } = req;
     if (!isValidObjectId(id)) throw new errorResponse("Invalid id", 400);
+    // 📸 Bild-URL übernehmen, wenn Bild hochgeladen wurde
+    if (req.file) {
+        body.photoUrl = req.file.path;
+    }
+
     const updatePet = await Pet.findOneAndUpdate(
         { _id: id, petOwner: req.userId },
         body,
@@ -55,16 +60,31 @@ export const updatePet = asyncHandler(async (req, res, next) => {
     res.json(updatePet);
 });
 
-// retirePet
-export const retirePet = asyncHandler(async (req, res, next) => {
+// sleepPet
+export const sleepPet = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
-    if (!isValidObjectId(id)) throw new errorResponse("Invalid id", 400);
+
     const pet = await Pet.findOneAndUpdate(
         { _id: id, petOwner: req.userId },
-        { retired: true },
+        { status: "sleeping", sleepingSince: new Date() },
         { new: true }
     );
-    if (!pet)
-        throw new errorResponse(`Pet with id of ${id} doesn\t exist`, 400);
-    res.json({ message: "Pet successfully retired", pet });
+
+    if (!pet) throw new errorResponse("Pet not found", 404);
+
+    res.json({ message: `${pet.name} is now sleeping`, pet });
+});
+
+export const unsleepPet = asyncHandler(async (req, res, next) => {
+    const { id } = req.params;
+
+    const pet = await Pet.findOneAndUpdate(
+        { _id: id, petOwner: req.userId },
+        { status: "active", sleepingSince: null },
+        { new: true }
+    );
+
+    if (!pet) throw new errorResponse("Pet not found", 404);
+
+    res.json({ message: `${pet.name} is now active again`, pet });
 });

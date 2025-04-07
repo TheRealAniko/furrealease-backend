@@ -34,6 +34,15 @@ const petSchema = new Schema(
                 message: "Chip number is required if pet is chipped.",
             },
         }, // optional, only relevant if chipped = true
+        status: {
+            type: String,
+            enum: ["active", "sleeping"],
+            default: "active",
+        },
+        sleepingSince: {
+            type: Date,
+        },
+
         vaccinationPassUrl: { type: String },
         vaccinations: [
             {

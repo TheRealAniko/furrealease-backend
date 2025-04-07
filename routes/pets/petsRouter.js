@@ -4,7 +4,8 @@ import {
     createPet,
     getSinglePet,
     updatePet,
-    retirePet,
+    sleepPet,
+    unsleepPet,
 } from "../../controllers/pets/petsController.js";
 import healthRouter from "./healthRouter.js";
 import vetVisitsRouter from "./visitsRouter.js";
@@ -25,8 +26,12 @@ petsRouter
     .get(authenticate, getAllPets)
     .post(authenticate, upload.single("photo"), createPet);
 
-petsRouter.route("/:id").get(getSinglePet).patch(updatePet);
+petsRouter
+    .route("/:id")
+    .get(getSinglePet)
+    .patch(upload.single("photo"), updatePet);
 
-petsRouter.route("/:petId/cloud").patch(retirePet);
+petsRouter.patch("/:id/sleep", sleepPet);
+petsRouter.patch("/:id/unsleep", unsleepPet);
 
 export default petsRouter;
