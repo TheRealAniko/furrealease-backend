@@ -69,8 +69,14 @@ const petSchema = new Schema(
         ],
         weightHistory: [
             {
-                date: Date,
-                weight: Number,
+                date: {
+                    type: Date,
+                    required: true,
+                },
+                weight: {
+                    type: Number,
+                    required: true,
+                },
             },
         ],
         notes: [

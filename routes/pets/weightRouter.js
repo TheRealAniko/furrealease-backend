@@ -7,7 +7,7 @@ import {
     deleteWeightEntry,
 } from "../../controllers/pets/weightsController.js";
 
-const weightRouter = Router();
+const weightRouter = Router({ mergeParams: true });
 
 weightRouter.route("/").get(getAllWeightEntries).post(createWeightEntry);
 
