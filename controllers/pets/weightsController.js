@@ -55,14 +55,23 @@ export const updateWeight = asyncHandler(async (req, res, next) => {
 export const deleteWeightEntry = asyncHandler(async (req, res, next) => {
     const pet = await getPetById(req.params.petId);
     const { weightId } = req.params;
+
     if (!isValidObjectId(weightId)) {
         throw new errorResponse("Invalid Weight ID", 400);
     }
-    const weightToDelete = pet.weightHistory.id(weightId);
-    if (!weightToDelete) {
+
+    const exists = pet.weightHistory.some(
+        (entry) => entry._id.toString() === weightId
+    );
+
+    if (!exists) {
         throw new errorResponse("Weight not found", 404);
     }
-    weightToDelete.remove();
+
+    pet.weightHistory = pet.weightHistory.filter(
+        (entry) => entry._id.toString() !== weightId
+    );
+
     await pet.save();
     res.json({ message: "Weight deleted" });
 });

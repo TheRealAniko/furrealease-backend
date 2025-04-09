@@ -7,7 +7,7 @@ import {
     deleteNote,
 } from "../../controllers/pets/notesController.js";
 
-const notesRouter = Router();
+const notesRouter = Router({ mergeParams: true });
 
 notesRouter.route("/").get(getAllNotes).post(createNote);
 
