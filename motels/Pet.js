@@ -82,7 +82,9 @@ const petSchema = new Schema(
         notes: [
             {
                 date: Date,
-                text: String,
+                time: String,
+                category: { type: String, default: "Other" },
+                note: { type: String, required: true },
             },
         ],
     },

@@ -52,14 +52,19 @@ export const updateNote = asyncHandler(async (req, res, next) => {
 export const deleteNote = asyncHandler(async (req, res, next) => {
     const pet = await getPetById(req.params.petId);
     const { noteId } = req.params;
+
     if (!isValidObjectId(noteId)) {
         throw new errorResponse("Invalid Note ID", 400);
     }
-    const noteToDelete = pet.notes.id(noteId);
-    if (!noteToDelete) {
+
+    const exists = pet.notes.some((entry) => entry._id.toString() === notes);
+
+    if (!exists) {
         throw new errorResponse("Note not found", 404);
     }
-    noteToDelete.remove();
+
+    pet.notes = pet.notes.filter((entry) => entry._id.toString() !== notes);
+
     await pet.save();
     res.json({ message: "Note deleted" });
 });
