@@ -53,10 +53,23 @@ const petSchema = new Schema(
         ],
         medications: [
             {
-                name: String,
-                dosage: String,
-                date: Date,
-                status: String,
+                name: { type: String, required: true },
+                reason: { type: String },
+                dosage: { type: String },
+                route: {
+                    type: String,
+                    enum: [
+                        "oral",
+                        "injection",
+                        "topical",
+                        "eye drops",
+                        "other",
+                    ],
+                    default: "oral",
+                },
+                startDate: { type: Date, required: true },
+                endDate: { type: Date },
+                comment: { type: String },
             },
         ],
         vetVisits: [
