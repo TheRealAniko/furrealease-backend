@@ -3,37 +3,8 @@ import asyncHandler from "../../utils/asyncHandler.js";
 import errorResponse from "../../utils/errorResponse.js";
 import getPetById from "../../utils/getPetById.js";
 
-// getAllHealthEntries
-export const getAllHealthEntries = asyncHandler(async (req, res, next) => {
-    const pet = await getPetById(req.params.petId);
-
-    const healthData = {
-        vaccinations: pet.vaccinations,
-        medications: pet.medications,
-    };
-    res.json(healthData);
-});
-
-// getSingleHealthEntry
-export const getSingleHealthEntry = asyncHandler(async (req, res, next) => {
-    const pet = await getPetById(req.params.petId);
-    const { entryId } = req.params;
-
-    if (!isValidObjectId(entryId))
-        throw new errorResponse("Invalid Health entry ID", 400);
-
-    const entry = pet.vaccinations.id(entryId) || pet.medications.id(entryId);
-
-    if (!entry)
-        throw new errorResponse(
-            `Health entry with ID of ${entryId} doesn't exist`,
-            404
-        );
-    res.json(entry);
-});
-
-// createHealthEntry
-export const createHealthEntry = asyncHandler(async (req, res, next) => {
+// createMedicationEntry
+export const createMedicationEntry = asyncHandler(async (req, res, next) => {
     const pet = await getPetById(req.params.petId);
     const { body } = req;
     const { type, ...entryData } = body;

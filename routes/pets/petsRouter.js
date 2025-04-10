@@ -7,7 +7,8 @@ import {
     sleepPet,
     unsleepPet,
 } from "../../controllers/pets/petsController.js";
-import healthRouter from "./healthRouter.js";
+// import healthRouter from "./healthRouter.js";
+import medicationsRouter from "./medicationsRouter.js";
 import vetVisitsRouter from "./visitsRouter.js";
 import weightRouter from "./weightRouter.js";
 import notesRouter from "./notesRouter.js";
@@ -16,7 +17,8 @@ import authenticate from "../../middleware/authenticate.js";
 
 const petsRouter = Router();
 
-petsRouter.use("/:petId/health", healthRouter);
+// petsRouter.use("/:petId/health", healthRouter);
+petsRouter.use("/:petId/medications", medicationsRouter);
 petsRouter.use("/:petId/vet-visits", vetVisitsRouter);
 petsRouter.use("/:petId/weights", weightRouter);
 petsRouter.use("/:petId/notes", notesRouter);
