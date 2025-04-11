@@ -8,6 +8,7 @@ import {
     unsleepPet,
 } from "../../controllers/pets/petsController.js";
 // import healthRouter from "./healthRouter.js";
+import vaccinationsRouter from "./vaccinationsRouter.js";
 import medicationsRouter from "./medicationsRouter.js";
 import vetVisitsRouter from "./visitsRouter.js";
 import weightRouter from "./weightRouter.js";
@@ -18,6 +19,7 @@ import authenticate from "../../middleware/authenticate.js";
 const petsRouter = Router();
 
 // petsRouter.use("/:petId/health", healthRouter);
+petsRouter.use("/:petId/vaccinations", vaccinationsRouter);
 petsRouter.use("/:petId/medications", medicationsRouter);
 petsRouter.use("/:petId/vet-visits", vetVisitsRouter);
 petsRouter.use("/:petId/weights", weightRouter);
