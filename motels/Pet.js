@@ -46,11 +46,14 @@ const petSchema = new Schema(
         vaccinationPassUrl: { type: String },
         vaccinations: [
             {
-                name: String,
-                date: Date,
-                status: String,
+                name: { type: String, required: true },
+                date: { type: Date, required: true },
+                interval: { type: Number },
+                vet: { type: String },
+                comment: { type: String },
             },
         ],
+
         medications: [
             {
                 name: { type: String, required: true },
