@@ -5,6 +5,11 @@ const reminderSchema = new Schema(
     {
         title: { type: String, required: [true, "title is required."] },
         date: { type: Date, required: [true, "Date is required."] },
+        petOwner: {
+            type: ObjectId,
+            ref: "User",
+            required: [true, "Petowner is required."],
+        },
         petId: {
             type: ObjectId,
             ref: "Pet",
