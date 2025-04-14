@@ -58,14 +58,23 @@ export const updateVetVisit = asyncHandler(async (req, res, next) => {
 export const deleteVetVisit = asyncHandler(async (req, res, next) => {
     const pet = await getPetById(req.params.petId);
     const { visitId } = req.params;
+
     if (!isValidObjectId(visitId)) {
         throw new errorResponse("Invalid Vet Visit ID", 400);
     }
-    const visitToDelete = pet.vetVisits.id(visitId);
-    if (!visitToDelete) {
+
+    const exists = pet.vetVisits.some(
+        (entry) => entry._id.toString() === visitId
+    );
+
+    if (!exists) {
         throw new errorResponse("Vet Visit not found", 404);
     }
-    visitToDelete.remove();
+
+    pet.vetVisits = pet.vetVisits.filter(
+        (entry) => entry._id.toString() !== visitId
+    );
+
     await pet.save();
     res.json({ message: "Vet Visit deleted" });
 });

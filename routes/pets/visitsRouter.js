@@ -7,7 +7,7 @@ import {
     deleteVetVisit,
 } from "../../controllers/pets/visitController.js";
 
-const vetVisitsRouter = Router();
+const vetVisitsRouter = Router({ mergeParams: true });
 
 vetVisitsRouter.route("/").get(getAllVetVisits).post(createVetVisit);
 

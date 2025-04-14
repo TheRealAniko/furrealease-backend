@@ -77,10 +77,15 @@ const petSchema = new Schema(
         ],
         vetVisits: [
             {
-                date: Date,
-                reason: String,
-                feedback: String,
-                documentUrl: String,
+                date: { type: Date, required: true },
+                reason: { type: String, required: true },
+                vet: String,
+                notes: String,
+
+                vaccinationRef: { type: ObjectId },
+                medicationRef: { type: ObjectId },
+                weightRef: { type: ObjectId },
+                noteRef: { type: ObjectId },
             },
         ],
         weightHistory: [
