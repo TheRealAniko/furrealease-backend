@@ -38,17 +38,21 @@ export const createRem = asyncHandler(async (req, res, next) => {
 export const updateRem = asyncHandler(async (req, res, next) => {
     const { remId } = req.params;
     const { body } = req;
+
     if (!isValidObjectId(remId)) throw new errorResponse("Invalid ID", 400);
+
     const updateRem = await Reminder.findOneAndUpdate(
         { _id: remId, petOwner: req.userId },
         body,
         { new: true }
     ).populate("petOwner");
+
     if (!updateRem)
         throw new errorResponse(
             `Reminder with id of ${remId} doesn't exist`,
             400
         );
+
     res.json(updateRem);
 });
 
