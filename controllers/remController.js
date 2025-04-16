@@ -31,6 +31,9 @@ export const getSingleRem = asyncHandler(async (req, res, next) => {
 export const createRem = asyncHandler(async (req, res, next) => {
     const { body } = req;
     const newRem = await Reminder.create({ ...body, petOwner: req.userId });
+    console.log("📌 BODY", body);
+    console.log("📌 USER", req.userId);
+
     res.status(201).json(newRem);
 });
 
