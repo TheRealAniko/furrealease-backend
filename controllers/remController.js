@@ -1,7 +1,7 @@
 import { isValidObjectId } from "mongoose";
 import asyncHandler from "../utils/asyncHandler.js";
 import errorResponse from "../utils/errorResponse.js";
-import Reminder from "../motels/Reminder.js";
+import Reminder from "../models/Reminder.js";
 
 // getAllRem
 export const getAllRems = asyncHandler(async (req, res, next) => {

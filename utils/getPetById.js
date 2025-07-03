@@ -1,4 +1,4 @@
-import Pet from "../motels/Pet.js";
+import Pet from "../models/Pet.js";
 import { isValidObjectId } from "mongoose";
 import errorResponse from "./errorResponse.js";
 
