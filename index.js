@@ -25,7 +25,7 @@ app.use("/auth", authRouter);
 app.use("/pets", authenticate, petsRouter);
 app.use("/reminders", authenticate, remRouter);
 app.use("/api", authenticate, parseRouter);
-app.use("/api", transcribeRouter);
+app.use("/api", authenticate, transcribeRouter);
 app.use(errorHandler);
 
 app.get("/", (req, res) => {
