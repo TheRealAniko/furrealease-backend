@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import User from "../motels/User.js";
+import User from "../models/User.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import errorResponse from "../utils/errorResponse.js";
 

@@ -1,5 +1,5 @@
 import { isValidObjectId } from "mongoose";
-import Pet from "../../motels/Pet.js";
+import Pet from "../../models/Pet.js";
 import asyncHandler from "../../utils/asyncHandler.js";
 import errorResponse from "../../utils/errorResponse.js";
 
