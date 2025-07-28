@@ -5,6 +5,7 @@ import petsRouter from "./routes/pets/petsRouter.js";
 import remRouter from "./routes/remRouter.js";
 import authRouter from "./routes/authRouter.js";
 import parseRouter from "./routes/parseRouter.js";
+import userRouter from "./routes/userRouter.js";
 import transcribeRouter from "./routes/transcribeRouter.js";
 import errorHandler from "./middleware/errorHandler.js";
 import authenticate from "./middleware/authenticate.js";
@@ -26,6 +27,7 @@ app.use("/pets", authenticate, petsRouter);
 app.use("/reminders", authenticate, remRouter);
 app.use("/api", authenticate, parseRouter);
 app.use("/api", authenticate, transcribeRouter);
+app.use("/users", authenticate, userRouter);
 app.use(errorHandler);
 
 app.get("/", (req, res) => {
