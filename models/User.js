@@ -10,6 +10,8 @@ const userSchema = new Schema(
             required: [true, "Email is required."],
             unique: true,
             match: [/.+@.+\..+/, "Please enter a valid email address."],
+            lowercase: true,
+            trim: true,
         },
         password: {
             type: String,
@@ -17,6 +19,9 @@ const userSchema = new Schema(
             select: false,
         },
         photoUrl: { type: String },
+        pendingEmail: { type: String, lowercase: true, default: null },
+        emailChangeTokenHash: { type: String, default: null, select: false },
+        emailChangeTokenExpires: { type: Date, default: null },
     },
     { timestamps: true }
 );
